@@ -1,0 +1,5 @@
+body{font-family:system-ui,sans-serif;background:#0d1117;color:#e6edf3;display:flex;justify-content:center;padding:3rem}
+main{width:28rem}h1{font-size:2rem}form{display:flex;gap:.5rem}input{flex:1;padding:.6rem;font-size:1.1rem}
+button{padding:.6rem 1rem;font-size:1rem;cursor:pointer}ul{list-style:none;padding:0}
+li{display:flex;justify-content:space-between;padding:.6rem;border-bottom:1px solid #30363d;cursor:pointer}
+li.done{text-decoration:line-through;color:#7d8590}footer{margin-top:2rem;color:#7d8590;font-size:.9rem}
