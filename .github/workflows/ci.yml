@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        node: ["22", "24"]
+    uses: SahinurDEV/gha-shared-workflows/.github/workflows/node-ci.yml@main
+    with:
+      node-version: ${{ matrix.node }}
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-artifact@v7
+        with:
+          name: site
+          path: dist
+
+  ci-ok:
+    if: always()
+    needs: [test, build]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "test=${{ needs.test.result }} build=${{ needs.build.result }}"
+      - if: needs.test.result != 'success' || needs.build.result != 'success'
+        run: exit 1
